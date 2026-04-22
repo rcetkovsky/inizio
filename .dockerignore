@@ -1,0 +1,42 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Docs
+README.md
+*.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Debug
+debug-last-response.html
+*.log
+coverage/
+
+# Výstupy
+serp-*.json
+serp-*.csv
+serp-*.ndjson
+
+# Docker (samotné)
+Dockerfile
+docker-compose.yml
+.dockerignore

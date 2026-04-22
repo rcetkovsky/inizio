@@ -1,0 +1,57 @@
+# ============================================
+# DOCKER COMPOSE – Google SERP Scraper
+# ============================================
+# Lokální vývojové prostředí.
+#
+# Spuštění:        docker compose up --build
+# Na pozadí:       docker compose up -d
+# Zastavení:       docker compose down
+# Logy (detached): docker compose logs -f
+# ============================================
+
+services:
+
+  app:
+    container_name: serp-scraper-app
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - SERPER_API_KEY=${SERPER_API_KEY}
+
+    env_file:
+      - .env
+
+    volumes:
+      # Propojení zdrojového kódu – hot reload při změně
+      - .:/app
+      # Výjimka: node_modules bereme z kontejneru (rychlejší)
+      - /app/node_modules
+
+    restart: unless-stopped
+
+    networks:
+      - serp-network
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+    tty: true
+    stdin_open: true
+
+networks:
+  serp-network:
+    driver: bridge
+    name: serp-scraper-network
