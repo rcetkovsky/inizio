@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <title>Google SERP Scraper – extrakce organických výsledků</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <header class="site-header">
         <div class="container">
@@ -32,17 +34,9 @@
             <form id="search-form" class="search-form" autocomplete="off" novalidate>
                 <div class="search-row">
                     <label for="query" class="visually-hidden">Klíčové slovní spojení</label>
-                    <input
-                        type="text"
-                        id="query"
-                        name="query"
-                        class="search-input"
-                        placeholder="Zadejte klíčové slovní spojení…"
-                        required
-                        minlength="2"
-                        maxlength="200"
-                        aria-describedby="query-help"
-                    >
+                    <input type="text" id="query" name="query" class="search-input"
+                        placeholder="Zadejte klíčové slovní spojení…" required minlength="2" maxlength="200"
+                        aria-describedby="query-help">
                     <button type="submit" id="search-btn" class="btn btn-primary">
                         <span class="btn-label">Hledat</span>
                         <span class="btn-spinner" aria-hidden="true"></span>
@@ -108,13 +102,19 @@
             <h2 id="info-heading">Jak nástroj funguje</h2>
             <ol class="info-list">
                 <li>Do pole výše zadáte klíčové slovní spojení.</li>
-                <li>Aplikace odešle dotaz na lokální backend (<code>POST /api/search</code>).</li>
-                <li>Backend si vyžádá první stranu Google SERP a extrahuje <strong>pouze organické výsledky</strong> (reklamy jsou odfiltrovány).</li>
-                <li>Výsledky se zobrazí v tabulce a můžete si je stáhnout ve formátech <strong>JSON</strong>, <strong>CSV</strong> nebo <strong>NDJSON</strong>.</li>
+                <li>Aplikace odešle dotaz na backend (<code>POST /api/search</code>).</li>
+                <li>Backend volá oficiální <strong>Google SERP API</strong> (Serper.dev), které vrátí <strong>pouze
+                        organické výsledky</strong> z první strany Google vyhledávání. Reklamy a sponzorované odkazy
+                    jsou automaticky odfiltrovány.</li>
+                <li>Výsledky se zobrazí v tabulce a můžete si je stáhnout ve strukturovaných formátech
+                    <strong>JSON</strong>, <strong>CSV</strong> nebo <strong>NDJSON</strong> pro další strojové
+                    zpracování.</li>
             </ol>
             <p class="info-note">
-                <strong>Poznámka:</strong> Google aktivně omezuje automatizované dotazy. Pro časté nebo produkční použití
-                je vhodné nástroj napojit na oficiální API (Google Custom Search, SerpAPI apod.).
+                <strong>Technická poznámka:</strong> Nástroj využívá oficiální Google SERP API namísto přímého
+                scrapování google.com.
+                Důvod je, že Google aktivně blokuje automatizované dotazy z datacentrových IP adres (kde hosting běží).
+                API přístup zaručuje stabilní a spolehlivé výsledky odpovídající skutečnému vyhledávání v prohlížeči.
             </p>
         </section>
 
@@ -128,4 +128,5 @@
 
     <script src="js/main.js"></script>
 </body>
+
 </html>
