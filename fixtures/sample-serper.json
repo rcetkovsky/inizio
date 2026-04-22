@@ -1,0 +1,27 @@
+{
+    "searchParameters": {
+        "q": "testovací dotaz",
+        "gl": "cz",
+        "hl": "cs"
+    },
+    "organic": [
+        {
+            "title": "Testovací stránka – Wikipedie",
+            "link": "https://cs.wikipedia.org/wiki/Testovac%C3%AD_str%C3%A1nka",
+            "snippet": "Testovací stránka je v informatice dokument používaný pro ověření správné funkce systému.",
+            "position": 1
+        },
+        {
+            "title": "Example – Testovací článek s ukázkami",
+            "link": "https://www.example.com/clanek/testovaci-priklad",
+            "snippet": "Kompletní průvodce testovacími příklady pro vývojáře.",
+            "position": 2
+        },
+        {
+            "title": "Blog Example – Jak psát testy v roce 2026",
+            "link": "https://blog.example.org/2026/test-post",
+            "snippet": "Moderní přístupy k unit testování a best practices.",
+            "position": 3
+        }
+    ]
+}
