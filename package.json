@@ -1,0 +1,28 @@
+{
+  "name": "google-serp-scraper",
+  "version": "1.0.0",
+  "description": "Webový nástroj pro extrakci organických výsledků z první strany Google vyhledávání.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test scraper.test.js",
+    "test:verbose": "node --test --test-reporter=spec scraper.test.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.19.2"
+  },
+  "keywords": [
+    "google",
+    "serp",
+    "scraper",
+    "seo"
+  ],
+  "author": "",
+  "license": "MIT"
+}

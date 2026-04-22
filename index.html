@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nástroj pro extrakci organických výsledků z první strany Google vyhledávání.">
+    <title>Google SERP Scraper – extrakce organických výsledků</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">
+                <span class="logo-mark" aria-hidden="true">🔍</span>
+                Google SERP Scraper
+            </h1>
+            <p class="site-subtitle">
+                Extrakce organických výsledků z první strany Google vyhledávání.
+                Zadejte klíčové slovní spojení a stáhněte si výsledky ve strukturovaném formátu.
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- ============================ -->
+        <!-- FORMULÁŘ PRO VYHLEDÁVÁNÍ    -->
+        <!-- ============================ -->
+        <section class="search-section" aria-labelledby="search-heading">
+            <h2 id="search-heading" class="visually-hidden">Formulář pro vyhledávání</h2>
+
+            <form id="search-form" class="search-form" autocomplete="off" novalidate>
+                <div class="search-row">
+                    <label for="query" class="visually-hidden">Klíčové slovní spojení</label>
+                    <input
+                        type="text"
+                        id="query"
+                        name="query"
+                        class="search-input"
+                        placeholder="Zadejte klíčové slovní spojení…"
+                        required
+                        minlength="2"
+                        maxlength="200"
+                        aria-describedby="query-help"
+                    >
+                    <button type="submit" id="search-btn" class="btn btn-primary">
+                        <span class="btn-label">Hledat</span>
+                        <span class="btn-spinner" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <small id="query-help" class="form-help">
+                    Např. <em>nejlepší běžecké boty 2026</em> nebo <em>recept na domácí chléb</em>.
+                </small>
+            </form>
+        </section>
+
+        <!-- ============================ -->
+        <!-- STAVOVÉ HLÁŠKY              -->
+        <!-- ============================ -->
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+
+        <!-- ============================ -->
+        <!-- EXPORT PANEL                -->
+        <!-- ============================ -->
+        <section id="export-panel" class="export-panel" hidden aria-label="Export výsledků">
+            <div class="export-info">
+                <strong id="result-count">0</strong> výsledků pro dotaz:
+                <em id="result-query"></em>
+            </div>
+            <div class="export-buttons">
+                <button type="button" id="export-json" class="btn btn-secondary" title="Stáhnout jako JSON">
+                    ⬇ JSON
+                </button>
+                <button type="button" id="export-csv" class="btn btn-secondary" title="Stáhnout jako CSV">
+                    ⬇ CSV
+                </button>
+                <button type="button" id="export-ndjson" class="btn btn-secondary" title="Stáhnout jako NDJSON">
+                    ⬇ NDJSON
+                </button>
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- VÝSLEDKY                    -->
+        <!-- ============================ -->
+        <section id="results-section" class="results-section" hidden aria-label="Výsledky vyhledávání">
+            <div class="table-wrapper">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-position">#</th>
+                            <th scope="col" class="col-title">Titulek</th>
+                            <th scope="col" class="col-snippet">Popis</th>
+                            <th scope="col" class="col-url">URL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                        <!-- dynamicky generováno přes js/main.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============================ -->
+        <!-- NÁPOVĚDA / INFO             -->
+        <!-- ============================ -->
+        <section class="info-section" aria-labelledby="info-heading">
+            <h2 id="info-heading">Jak nástroj funguje</h2>
+            <ol class="info-list">
+                <li>Do pole výše zadáte klíčové slovní spojení.</li>
+                <li>Aplikace odešle dotaz na lokální backend (<code>POST /api/search</code>).</li>
+                <li>Backend si vyžádá první stranu Google SERP a extrahuje <strong>pouze organické výsledky</strong> (reklamy jsou odfiltrovány).</li>
+                <li>Výsledky se zobrazí v tabulce a můžete si je stáhnout ve formátech <strong>JSON</strong>, <strong>CSV</strong> nebo <strong>NDJSON</strong>.</li>
+            </ol>
+            <p class="info-note">
+                <strong>Poznámka:</strong> Google aktivně omezuje automatizované dotazy. Pro časté nebo produkční použití
+                je vhodné nástroj napojit na oficiální API (Google Custom Search, SerpAPI apod.).
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Google SERP Scraper &middot; nástroj pro extrakci organických výsledků &middot; 2026</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

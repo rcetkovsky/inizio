@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+package-lock.json
+
+# Debug a log soubory
+debug-last-response.html
+*.log
+npm-debug.log*
+
+# Stažené SERP výstupy
+serp-*.json
+serp-*.csv
+serp-*.ndjson
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Environment proměnné
+.env
+.env.local

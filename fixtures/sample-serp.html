@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>test dotaz - Hledat Googlem</title>
+</head>
+<body>
+
+<!-- Horní navigace Google – interní odkazy, NESMÍ projít parserem -->
+<header>
+    <a href="https://www.google.com/preferences">Nastavení</a>
+    <a href="https://accounts.google.com/login">Přihlásit se</a>
+    <a href="/search?q=test&amp;tbm=isch">Obrázky</a>
+</header>
+
+<!-- ============================================ -->
+<!-- REKLAMNÍ BLOK – MUSÍ BÝT ODFILTROVÁN         -->
+<!-- ============================================ -->
+<div id="tads">
+    <div data-text-ad="1" aria-label="Sponzorováno">
+        <div>
+            <a href="https://ad.example.com/landing?utm_source=google">
+                <h3>Sponzorovaná nabídka – sleva 50 %</h3>
+            </a>
+            <span>Kupte si produkt se slevou ještě dnes. Doprava zdarma.</span>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- ORGANICKÉ VÝSLEDKY                           -->
+<!-- ============================================ -->
+<div id="search">
+    <div id="rso">
+
+        <!-- Výsledek 1 – Wikipedia (odkaz obalený Google /url? wrapperem) -->
+        <div class="g">
+            <div>
+                <a href="/url?q=https%3A%2F%2Fcs.wikipedia.org%2Fwiki%2FTestovac%C3%AD_str%C3%A1nka&amp;sa=U&amp;ved=xyz">
+                    <br>
+                    <h3>Testovací stránka – Wikipedie</h3>
+                </a>
+                <div>
+                    <cite>cs.wikipedia.org › wiki › Testovací_stránka</cite>
+                </div>
+            </div>
+            <div>
+                <span>Testovací stránka je v informatice dokument používaný pro ověření správné funkce systému. Obvykle obsahuje základní informace o konfiguraci a testovací obsah pro validaci.</span>
+            </div>
+        </div>
+
+        <!-- Výsledek 2 – Example.com (přímá URL) -->
+        <div class="g">
+            <div>
+                <a href="https://www.example.com/clanek/testovaci-priklad">
+                    <br>
+                    <h3>Example – Testovací článek s ukázkami</h3>
+                </a>
+                <div>
+                    <cite>www.example.com › clanek › testovaci-priklad</cite>
+                </div>
+            </div>
+            <div>
+                <span>Kompletní průvodce testovacími příklady. Naučte se, jak správně psát testovací scénáře a jak interpretovat výstupy automatizovaných testů ve vývojovém prostředí.</span>
+            </div>
+        </div>
+
+        <!-- Výsledek 3 – Blog (přímá URL s query parametrem) -->
+        <div class="g">
+            <div>
+                <a href="https://blog.example.org/2026/test-post?ref=google">
+                    <br>
+                    <h3>Blog Example – Jak psát testy v roce 2026</h3>
+                </a>
+                <div>
+                    <cite>blog.example.org › 2026 › test-post</cite>
+                </div>
+            </div>
+            <div>
+                <span>Moderní přístupy k unit testování. Srovnání nejpoužívanějších knihoven, best practices a praktické ukázky z reálných projektů včetně CI/CD integrace.</span>
+            </div>
+        </div>
+
+        <!-- Duplicitní odkaz – parser musí deduplikovat -->
+        <div class="g">
+            <div>
+                <a href="/url?q=https%3A%2F%2Fcs.wikipedia.org%2Fwiki%2FTestovac%C3%AD_str%C3%A1nka&amp;sa=U">
+                    <h3>Testovací stránka – Wikipedie (duplicitní odkaz)</h3>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SPODNÍ REKLAMY – MUSÍ BÝT ODFILTROVÁNY       -->
+<!-- ============================================ -->
+<div id="bottomads">
+    <div data-text-ad="1">
+        <a href="https://ad.example.com/bottom">
+            <h3>Další reklama dole</h3>
+        </a>
+    </div>
+</div>
+
+<!-- Patička Google – interní odkazy -->
+<footer>
+    <a href="https://policies.google.com/privacy">Ochrana soukromí</a>
+    <a href="https://support.google.com/websearch">Nápověda</a>
+</footer>
+
+</body>
+</html>
