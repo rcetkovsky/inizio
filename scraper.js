@@ -7,7 +7,7 @@ const axios = require('axios');
 const SERPER_ENDPOINT = 'https://google.serper.dev/search';
 
 /**
- * Parsuje odpověď ze Serper.dev API a vrací organické výsledky.
+ * Parsuje odpověď ze Serper.dev API a vrací pole organických výsledků.
  * Čistá funkce – testovatelná bez síťového volání.
  */
 function parseSerp(apiResponse) {
@@ -19,6 +19,7 @@ function parseSerp(apiResponse) {
 
     organic.forEach((item) => {
         if (!item || typeof item !== 'object') return;
+
         const title = cleanText(item.title);
         const url = typeof item.link === 'string' ? item.link.trim() : '';
         const snippet = cleanText(item.snippet);
@@ -30,9 +31,9 @@ function parseSerp(apiResponse) {
         seen.add(url);
         results.push({
             position: results.length + 1,
-            title,
-            url,
-            snippet,
+            title: title,
+            url: url,
+            snippet: snippet,
         });
     });
 
@@ -40,7 +41,7 @@ function parseSerp(apiResponse) {
 }
 
 /**
- * Zavolá Serper.dev API a vrátí parsované organické výsledky.
+ * Zavolá Serper.dev API a vrátí parsované organické výsledky z Google.
  */
 async function fetchSerp(query, options = {}) {
     if (!query || typeof query !== 'string' || query.trim() === '') {
@@ -49,7 +50,7 @@ async function fetchSerp(query, options = {}) {
 
     const apiKey = options.apiKey || process.env.SERPER_API_KEY;
     if (!apiKey) {
-        throw new Error('Chybí API klíč (SERPER_API_KEY). Nastavte ho v Environment Variables.');
+        throw new Error('Chybí API klíč (SERPER_API_KEY). Nastavte ho v Environment Variables na Renderu.');
     }
 
     let response;
@@ -75,7 +76,7 @@ async function fetchSerp(query, options = {}) {
             throw new Error('Neplatný API klíč pro Serper.dev.');
         }
         if (err.response && err.response.status === 429) {
-            throw new Error('Překročen limit Serper.dev API.');
+            throw new Error('Překročen limit Serper.dev API. Zkuste to později.');
         }
         throw new Error(`Chyba při volání API: ${err.message}`);
     }

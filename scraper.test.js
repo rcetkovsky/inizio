@@ -24,8 +24,7 @@ describe('parseSerp – základní kontrakt', () => {
     });
 
     test('každý výsledek má požadované klíče', () => {
-        const result = parseSerp(FIXTURE);
-        for (const item of result) {
+        for (const item of parseSerp(FIXTURE)) {
             assert.ok('position' in item);
             assert.ok('title' in item);
             assert.ok('url' in item);
@@ -34,8 +33,7 @@ describe('parseSerp – základní kontrakt', () => {
     });
 
     test('datové typy odpovídají kontraktu', () => {
-        const result = parseSerp(FIXTURE);
-        for (const item of result) {
+        for (const item of parseSerp(FIXTURE)) {
             assert.equal(typeof item.position, 'number');
             assert.equal(typeof item.title, 'string');
             assert.equal(typeof item.url, 'string');
@@ -58,8 +56,7 @@ describe('parseSerp – kvalita dat', () => {
     });
 
     test('pozice jsou 1..N bez mezer', () => {
-        const result = parseSerp(FIXTURE);
-        result.forEach((item, idx) => {
+        parseSerp(FIXTURE).forEach((item, idx) => {
             assert.equal(item.position, idx + 1);
         });
     });
@@ -80,19 +77,24 @@ describe('parseSerp – odolnost vůči nevalidnímu vstupu', () => {
     test('null vrátí prázdné pole', () => {
         assert.deepEqual(parseSerp(null), []);
     });
+
     test('undefined vrátí prázdné pole', () => {
         assert.deepEqual(parseSerp(undefined), []);
     });
+
     test('prázdný objekt vrátí prázdné pole', () => {
         assert.deepEqual(parseSerp({}), []);
     });
-    test('objekt bez organic klíče vrátí prázdné pole', () => {
+
+    test('objekt bez klíče organic vrátí prázdné pole', () => {
         assert.deepEqual(parseSerp({ other: 'data' }), []);
     });
-    test('organic není pole – vrátí prázdné pole', () => {
-        assert.deepEqual(parseSerp({ organic: 'invalid' }), []);
+
+    test('organic není pole → prázdné pole', () => {
+        assert.deepEqual(parseSerp({ organic: 'not-array' }), []);
     });
-    test('položka bez url je ignorována', () => {
+
+    test('položka bez URL je ignorována', () => {
         const result = parseSerp({
             organic: [
                 { title: 'A', link: 'https://example.com', snippet: 'x' },
@@ -101,6 +103,7 @@ describe('parseSerp – odolnost vůči nevalidnímu vstupu', () => {
         });
         assert.equal(result.length, 1);
     });
+
     test('duplicitní URL jsou odfiltrovány', () => {
         const result = parseSerp({
             organic: [
@@ -111,15 +114,28 @@ describe('parseSerp – odolnost vůči nevalidnímu vstupu', () => {
         });
         assert.equal(result.length, 2);
     });
+
+    test('položka s nevalidní URL je ignorována', () => {
+        const result = parseSerp({
+            organic: [
+                { title: 'A', link: 'javascript:alert(1)', snippet: 'x' },
+                { title: 'B', link: 'https://example.com', snippet: 'y' },
+            ],
+        });
+        assert.equal(result.length, 1);
+        assert.equal(result[0].url, 'https://example.com');
+    });
 });
 
 describe('fetchSerp – validace vstupu', () => {
     test('prázdný dotaz vyhodí chybu', async () => {
         await assert.rejects(() => fetchSerp(''), /prázdný/i);
     });
+
     test('null dotaz vyhodí chybu', async () => {
         await assert.rejects(() => fetchSerp(null), /prázdný/i);
     });
+
     test('chybějící API klíč vyhodí chybu', async () => {
         const original = process.env.SERPER_API_KEY;
         delete process.env.SERPER_API_KEY;
@@ -130,13 +146,16 @@ describe('fetchSerp – validace vstupu', () => {
 
 describe('_internals.cleanText', () => {
     const { cleanText } = _internals;
+
     test('odstraní vícenásobné mezery', () => {
         assert.equal(cleanText('  a    b   c  '), 'a b c');
     });
+
     test('převede nedělitelnou mezeru', () => {
         assert.equal(cleanText('a\u00A0b'), 'a b');
     });
-    test('prázdný vstup → prázdný string', () => {
+
+    test('prázdný / null / undefined vstup', () => {
         assert.equal(cleanText(''), '');
         assert.equal(cleanText(null), '');
         assert.equal(cleanText(undefined), '');
